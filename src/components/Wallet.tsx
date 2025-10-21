@@ -1,10 +1,13 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 
-const Wallet = () => {
-  // ตัวอย่าง state สำหรับยอดเงิน
-  const [balance, setBalance] = useState(1500000);
-  const [referral, setReferral] = useState(50000);
+interface WalletProps {
+  balance: number;
+}
+
+const Wallet = ({ balance: initialBalance }: WalletProps) => {
+  const [balance] = useState(initialBalance);
+  const [referral] = useState(50000);
 
   // ตัวอย่างประวัติธุรกรรม
   const transactions = [
