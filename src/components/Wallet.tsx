@@ -1,8 +1,18 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Wallet as WalletIcon, TrendingUp, Download, Upload, History } from "lucide-react";
 
 interface WalletProps {
   balance: number;
+}
+
+interface Transaction {
+  date: string;
+  type: string;
+  amount: number;
+  status: "สำเร็จ" | "รอดำเนินการ";
 }
 
 const Wallet = ({ balance: initialBalance }: WalletProps) => {
@@ -10,56 +20,112 @@ const Wallet = ({ balance: initialBalance }: WalletProps) => {
   const [referral] = useState(50000);
 
   // ตัวอย่างประวัติธุรกรรม
-  const transactions = [
+  const transactions: Transaction[] = [
     { date: "21/10/2025", type: "ฝากเงิน", amount: 500, status: "สำเร็จ" },
     { date: "20/10/2025", type: "ถอนเงิน", amount: 300, status: "รอดำเนินการ" },
     { date: "19/10/2025", type: "แนะนำเพื่อน", amount: 100, status: "สำเร็จ" },
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 space-y-6">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold font-thai text-foreground mb-2">กระเป๋าเงิน</h1>
+        <p className="text-muted-foreground">จัดการยอดเงินและธุรกรรมของคุณ</p>
+      </div>
+
       {/* Wallet Overview */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <div className="p-6 bg-white rounded-lg shadow">
-          <h3 className="text-lg font-bold font-thai mb-2">ยอดเงินรวม</h3>
-          <p className="text-2xl font-extrabold">{balance.toLocaleString()} ฿</p>
-        </div>
-        <div className="p-6 bg-white rounded-lg shadow">
-          <h3 className="text-lg font-bold font-thai mb-2">เงินจากแนะนำเพื่อน</h3>
-          <p className="text-2xl font-extrabold text-green-600">{referral.toLocaleString()} ฿</p>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <Card className="bg-gradient-primary border-0 shadow-lg hover:shadow-xl transition-all">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-thai text-primary-foreground flex items-center gap-2">
+              <WalletIcon className="w-5 h-5" />
+              ยอดเงินรวม
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-4xl font-extrabold text-primary-foreground">
+              {balance.toLocaleString()} ฿
+            </p>
+          </CardContent>
+        </Card>
+
+        <Card className="bg-gradient-gold border-0 shadow-lg hover:shadow-xl transition-all">
+          <CardHeader className="pb-3">
+            <CardTitle className="text-lg font-thai text-accent-foreground flex items-center gap-2">
+              <TrendingUp className="w-5 h-5" />
+              เงินจากแนะนำเพื่อน
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p className="text-4xl font-extrabold text-accent-foreground">
+              {referral.toLocaleString()} ฿
+            </p>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Action Buttons */}
-      <div className="flex flex-wrap gap-4 mb-8">
-        <Button className="bg-blue-500 hover:bg-blue-600 text-white">ฝากเงิน</Button>
-        <Button className="bg-red-500 hover:bg-red-600 text-white">ถอนเงิน</Button>
-        <Button className="bg-gray-200 hover:bg-gray-300 text-gray-700">ประวัติธุรกรรม</Button>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-thai">ดำเนินการ</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="flex flex-wrap gap-4">
+            <Button className="flex items-center gap-2" variant="default">
+              <Download className="w-4 h-4" />
+              ฝากเงิน
+            </Button>
+            <Button className="flex items-center gap-2" variant="destructive">
+              <Upload className="w-4 h-4" />
+              ถอนเงิน
+            </Button>
+            <Button className="flex items-center gap-2" variant="outline">
+              <History className="w-4 h-4" />
+              ประวัติธุรกรรม
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Recent Transactions */}
-      <div className="overflow-x-auto bg-white rounded-lg shadow">
-        <table className="min-w-full table-auto">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-4 py-2 text-left">วันที่</th>
-              <th className="px-4 py-2 text-left">ประเภท</th>
-              <th className="px-4 py-2 text-right">จำนวนเงิน</th>
-              <th className="px-4 py-2 text-left">สถานะ</th>
-            </tr>
-          </thead>
-          <tbody>
-            {transactions.map((tx, index) => (
-              <tr key={index} className="border-b">
-                <td className="px-4 py-2">{tx.date}</td>
-                <td className="px-4 py-2">{tx.type}</td>
-                <td className="px-4 py-2 text-right">{tx.amount.toLocaleString()} ฿</td>
-                <td className="px-4 py-2">{tx.status}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-thai">ธุรกรรมล่าสุด</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">วันที่</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">ประเภท</th>
+                  <th className="px-4 py-3 text-right text-sm font-semibold text-foreground">จำนวนเงิน</th>
+                  <th className="px-4 py-3 text-left text-sm font-semibold text-foreground">สถานะ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((tx, index) => (
+                  <tr key={index} className="border-b border-border hover:bg-muted/50 transition-colors">
+                    <td className="px-4 py-3 text-sm text-muted-foreground">{tx.date}</td>
+                    <td className="px-4 py-3 text-sm font-medium">{tx.type}</td>
+                    <td className="px-4 py-3 text-sm text-right font-semibold">
+                      {tx.amount.toLocaleString()} ฿
+                    </td>
+                    <td className="px-4 py-3">
+                      <Badge 
+                        variant={tx.status === "สำเร็จ" ? "default" : "secondary"}
+                        className={tx.status === "สำเร็จ" ? "bg-success text-success-foreground" : ""}
+                      >
+                        {tx.status}
+                      </Badge>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 };
