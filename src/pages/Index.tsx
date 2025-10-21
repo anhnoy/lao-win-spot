@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
@@ -6,6 +7,11 @@ import { Sparkles, Shield, Zap, Award } from "lucide-react";
 import heroImage from "@/assets/hero-lottery.jpg";
 
 const Index = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -63,16 +69,6 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center space-y-3 p-6">
-              <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-primary">
-                <Shield className="h-8 w-8 text-primary-foreground" />
-              </div>
-              <h3 className="text-xl font-bold font-thai">ปลอดภัย 100%</h3>
-              <p className="text-muted-foreground">
-                ระบบรักษาความปลอดภัยระดับสากล ข้อมูลเข้ารหัส
-              </p>
-            </div>
-
-            <div className="text-center space-y-3 p-6">
               <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-gold">
                 <Zap className="h-8 w-8 text-accent-foreground" />
               </div>
@@ -82,7 +78,8 @@ const Index = () => {
               </p>
             </div>
 
-            <div className="text-center space-y-3 p-6">
+            {/* Award Icon - กดแล้วโชว์ Modal */}
+            <div className="text-center space-y-3 p-6 cursor-pointer" onClick={openModal}>
               <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-win">
                 <Award className="h-8 w-8 text-success-foreground" />
               </div>
@@ -108,48 +105,12 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <LotteryCard
-              title="หวยลาวพัฒนา"
-              type="รางวัลใหญ่"
-              closingTime="15:30 น."
-              prize="3,500,000 ฿"
-              status="open"
-            />
-            <LotteryCard
-              title="หวยลาว VIP"
-              type="รางวัลพิเศษ"
-              closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open"
-            />
-            <LotteryCard
-              title="หวยลาว TV"
-              type="รางวัลยอดนิยม"
-              closingTime="17:30 น."
-              prize="2,800,000 ฿"
-              status="closed"
-            />
-            <LotteryCard
-              title="หวยลาวสตาร์"
-              type="รางวัลดาว"
-              closingTime="14:00 น."
-              prize="4,200,000 ฿"
-              status="open"
-            />
-            <LotteryCard
-              title="หวยลาวพิเศษ"
-              type="รางวัลพรีเมี่ยม"
-              closingTime="18:00 น."
-              prize="6,000,000 ฿"
-              status="open"
-            />
-            <LotteryCard
-              title="หวยลาวเช้า"
-              type="รางวัลเช้า"
-              closingTime="10:30 น."
-              prize="1,500,000 ฿"
-              status="closed"
-            />
+            <LotteryCard title="หวยลาวพัฒนา" type="รางวัลใหญ่" closingTime="15:30 น." prize="3,500,000 ฿" status="open" />
+            <LotteryCard title="หวยลาว VIP" type="รางวัลพิเศษ" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
+            <LotteryCard title="หวยลาว TV" type="รางวัลยอดนิยม" closingTime="17:30 น." prize="2,800,000 ฿" status="closed" />
+            <LotteryCard title="หวยลาวสตาร์" type="รางวัลดาว" closingTime="14:00 น." prize="4,200,000 ฿" status="open" />
+            <LotteryCard title="หวยลาวพิเศษ" type="รางวัลพรีเมี่ยม" closingTime="18:00 น." prize="6,000,000 ฿" status="open" />
+            <LotteryCard title="หวยลาวเช้า" type="รางวัลเช้า" closingTime="10:30 น." prize="1,500,000 ฿" status="closed" />
           </div>
 
           <div className="text-center mt-12">
@@ -161,6 +122,94 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Modal แสดงอัตราจ่าย */}
+      {isModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white rounded-lg shadow-lg max-w-4xl w-full max-h-[80vh] overflow-auto p-6">
+            <h2 className="text-2xl font-bold mb-4 text-center">อัตราจ่ายหวยลาว</h2>
+
+            <table className="w-full table-auto border border-gray-300">
+              <thead>
+                <tr className="bg-gray-200">
+                  <th className="border px-2 py-1">ประเภทหวย</th>
+                  <th className="border px-2 py-1">อัตราจ่าย (บาท/1 หน่วย)</th>
+                  <th className="border px-2 py-1">การจ่ายข้างเคียง</th>
+                  <th className="border px-2 py-1">ตัวอย่าง</th>
+                  <th className="border px-2 py-1">หมายเหตุ</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td className="border px-2 py-1">1 ตัวตรง</td>
+                  <td className="border px-2 py-1">4</td>
+                  <td className="border px-2 py-1">–</td>
+                  <td className="border px-2 py-1">แทงเลข 7 → ออก 7 → ได้ 4 บาท</td>
+                  <td className="border px-2 py-1">แทงเลขตรง 1 ตัว</td>
+                </tr>
+                <tr>
+                  <td className="border px-2 py-1">2 ตัวตรง</td>
+                  <td className="border px-2 py-1">95</td>
+                  <td className="border px-2 py-1">ข้างเคียง: 4</td>
+                  <td className="border px-2 py-1">
+                    แทงเลข 23 → ออก 23 → ได้ 95 บาท<br />
+                    ออก 22 หรือ 24 → ได้ 4 บาท
+                  </td>
+                  <td className="border px-2 py-1">ตัวตรง + ข้างเคียงเลขใกล้เคียง</td>
+                </tr>
+                <tr>
+                  <td className="border px-2 py-1">3 ตัวตรง</td>
+                  <td className="border px-2 py-1">800</td>
+                  <td className="border px-2 py-1">ข้างเคียง: 130</td>
+                  <td className="border px-2 py-1">
+                    แทงเลข 123 → ออก 123 → ได้ 800 บาท<br />
+                    ออก 122 หรือ 124 → ได้ 130 บาท
+                  </td>
+                  <td className="border px-2 py-1">ตัวตรง + ข้างเคียงเลขใกล้เคียง</td>
+                </tr>
+                <tr>
+                  <td className="border px-2 py-1">4 ตัวตรง</td>
+                  <td className="border px-2 py-1">4,500</td>
+                  <td className="border px-2 py-1">–</td>
+                  <td className="border px-2 py-1">แทงเลข 1234 → ออก 1234 → ได้ 4,500 บาท</td>
+                  <td className="border px-2 py-1">ตัวตรง 4 ตัว</td>
+                </tr>
+                <tr>
+                  <td className="border px-2 py-1">5 ตัวตรง</td>
+                  <td className="border px-2 py-1">55,000</td>
+                  <td className="border px-2 py-1">–</td>
+                  <td className="border px-2 py-1">แทงเลข 12345 → ออก 12345 → ได้ 55,000 บาท</td>
+                  <td className="border px-2 py-1">ตัวตรง 5 ตัว</td>
+                </tr>
+                <tr>
+                  <td className="border px-2 py-1">6 ตัวตรง</td>
+                  <td className="border px-2 py-1">130,000</td>
+                  <td className="border px-2 py-1">–</td>
+                  <td className="border px-2 py-1">แทงเลข 123456 → ออก 123456 → ได้ 130,000 บาท</td>
+                  <td className="border px-2 py-1">ตัวตรง 6 ตัว</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <p className="mt-3 text-sm text-gray-600">
+              💡 หมายเหตุ:<br />
+              ข้างเคียง = เลขใกล้เคียงตัวตรง 1 หลัก เช่น<br />
+              2 ตัวตรง: แทง 23 → ข้างเคียงคือ 22, 24<br />
+              3 ตัวตรง: แทง 123 → ข้างเคียงคือ 122, 124<br />
+              ไม่มีการแยกตัวบน/ล่าง → ทุกเลขที่ออกถือว่าตรงตัว
+            </p>
+
+            <div className="mt-4 text-right">
+              <button
+                className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                onClick={closeModal}
+              >
+                ปิด
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* CTA Section */}
       <section className="py-20 bg-gradient-royal relative overflow-hidden">

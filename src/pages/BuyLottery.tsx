@@ -31,8 +31,8 @@ const BuyLottery = () => {
   const quickNumbers = ["12", "23", "34", "45", "56", "67", "78", "89", "90", "01"];
 
   const handleAddToCart = () => {
-    if (selectedNumbers.length !== 2) {
-      toast.error("กรุณาใส่เลข 2 หลัก");
+    if (selectedNumbers.length !== 6) {
+      toast.error("กรุณาใส่เลข 1-6 หลัก");
       return;
     }
 
