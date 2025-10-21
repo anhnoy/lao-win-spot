@@ -59,12 +59,20 @@ const Navbar = () => {
             <div className="hidden sm:flex">
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="ghost" size="icon" className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-gold">
-                    <Wallet className="h-4 w-4 text-accent-foreground" />
-                    <span className="font-semibold text-accent-foreground">{userBalance.toLocaleString()} ฿</span>
+                  <Button
+                    variant="default"
+                    className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-yellow-400 to-yellow-600 shadow-md hover:opacity-90 transition-all duration-300 min-w-[120px]"
+                  >
+                    <Wallet className="h-4 w-4 text-white shrink-0" />
+                    <span className="font-semibold text-white font-mono tabular-nums">
+                      {userBalance.toLocaleString()} ฿
+                    </span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[400px] sm:w-[480px] overflow-y-auto">
+                <SheetContent
+                  side="right"
+                  className="w-[400px] sm:w-[480px] overflow-y-auto"
+                >
                   <WalletComponent balance={userBalance} compact />
                 </SheetContent>
               </Sheet>

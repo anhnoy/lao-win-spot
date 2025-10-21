@@ -8,7 +8,7 @@ export const useCart = () => {
 
   const addToCart = useCallback((number: string, amount: number) => {
     if (number.length !== 2) {
-      toast.error("กรุณาใส่เลข 2 หลัก");
+      toast.error("กรุณาใส่เลข 1-6 หลัก");
       return false;
     }
 
