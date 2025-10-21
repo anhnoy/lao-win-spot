@@ -64,8 +64,8 @@ const Navbar = () => {
                     <span className="font-semibold text-accent-foreground">{userBalance.toLocaleString()} ฿</span>
                   </Button>
                 </SheetTrigger>
-                <SheetContent side="right" className="w-[320px]">
-                  <WalletComponent balance={userBalance} />
+                <SheetContent side="right" className="w-[400px] sm:w-[480px] overflow-y-auto">
+                  <WalletComponent balance={userBalance} compact />
                 </SheetContent>
               </Sheet>
             </div>
