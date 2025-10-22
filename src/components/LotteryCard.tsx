@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, Award } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import lotteryBg from "@/assets/lottery-bg.png";
 
 interface LotteryCardProps {
   title: string;
@@ -16,7 +17,14 @@ const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardPro
   const dateStr = `${today.getDate().toString().padStart(2, '0')}/${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getFullYear()}`;
   
   return (
-    <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 bg-gradient-to-br from-emerald-600 via-teal-700 to-blue-800">
+    <Card className="relative overflow-hidden hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: `url(${lotteryBg})` }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900/40 via-teal-900/40 to-blue-900/40" />
+      
       {/* Corner Decorations */}
       <div className="absolute top-0 left-0 w-32 h-32 border-t-2 border-l-2 border-yellow-400/60"></div>
       <div className="absolute top-0 right-0 w-32 h-32 border-t-2 border-r-2 border-yellow-400/60"></div>
