@@ -89,12 +89,20 @@ const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardPro
           <p className="text-yellow-400 text-sm mb-1">🏆 รางวัลสูงสุด: <span className="text-xl font-bold">{prize}</span></p>
         </div>
 
-        <Button 
-          className="w-full bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-6 rounded-lg shadow-lg transition-all"
-          disabled={status === "closed"}
-        >
-          {status === "open" ? "ซื้อหวย" : "ปิดรับแทง"}
-        </Button>
+        <div className="flex gap-2">
+          <Button 
+            className="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold text-lg py-6 rounded-lg shadow-lg transition-all"
+            disabled={status === "closed"}
+          >
+            เพิ่มลงตะกร้า
+          </Button>
+          <Button 
+            className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-6 rounded-lg shadow-lg transition-all"
+            disabled={status === "closed"}
+          >
+            {status === "open" ? "ซื้อหวย" : "ปิดรับแทง"}
+          </Button>
+        </div>
       </div>
     </div>
   );
