@@ -105,14 +105,12 @@ const Index = () => {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <LotteryCard title="หวยลาวพัฒนา" type="รางวัลใหญ่" closingTime="15:30 น." prize="3,500,000 ฿" status="open" />
-            <LotteryCard title="หวยลาว VIP" type="รางวัลพิเศษ" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
-            <LotteryCard title="หวยลาว TV" type="รางวัลยอดนิยม" closingTime="17:30 น." prize="2,800,000 ฿" status="closed" />
-            <LotteryCard title="หวยลาวสตาร์" type="รางวัลดาว" closingTime="14:00 น." prize="4,200,000 ฿" status="open" />
-            <LotteryCard title="หวยลาวพิเศษ" type="รางวัลพรีเมี่ยม" closingTime="18:00 น." prize="6,000,000 ฿" status="open" />
-            <LotteryCard title="หวยลาวเช้า" type="รางวัลเช้า" closingTime="10:30 น." prize="1,500,000 ฿" status="closed" />
+            <LotteryCard title="หวยลาว VIP" type="777777" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
+            <LotteryCard title="หวยลาว VIP" type="777778" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
+            <LotteryCard title="หวยลาว VIP" type="777779" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
+            <LotteryCard title="หวยลาว VIP" type="777771" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
+            <LotteryCard title="หวยลาว VIP" type="777772" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
           </div>
-
           <div className="text-center mt-12">
             <Button size="lg" variant="outline" asChild>
               <Link to="/buy">
