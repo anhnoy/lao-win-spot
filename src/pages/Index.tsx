@@ -4,28 +4,13 @@ import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import LotteryCard from "@/components/LotteryCard";
 import { Sparkles, Shield, Zap, Award } from "lucide-react";
-import { useCartContext } from "@/contexts/CartContext";
-import { toast } from "sonner";
 import heroImage from "@/assets/hero-lottery.jpg";
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { addToCart } = useCartContext();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const handleAddToCart = (lotteryNumber: string) => {
-    // Add mock lottery number with default amount
-    const success = addToCart(lotteryNumber, 1);
-    if (success) {
-      toast.success(`เพิ่มเลข ${lotteryNumber} ลงตะกร้าแล้ว`);
-    }
-  };
-
-  const handleBuy = () => {
-    toast.success("กำลังไปหน้าซื้อหวย...");
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -136,57 +121,40 @@ const Index = () => {
             <LotteryCard
               title="หวยลาว VIP"
               closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open" 
-              type=""
-              onAddToCart={() => handleAddToCart("123456")}
-              onBuy={handleBuy}
-            />
+              prize="5,000,0004 ฿"
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open" 
-              type=""
-              onAddToCart={() => handleAddToCart("234567")}
-              onBuy={handleBuy}
-            />
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open" 
-              type=""
-              onAddToCart={() => handleAddToCart("345678")}
-              onBuy={handleBuy}
-            />
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open" 
-              type=""
-              onAddToCart={() => handleAddToCart("456789")}
-              onBuy={handleBuy}
-            />
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open" 
-              type=""
-              onAddToCart={() => handleAddToCart("567890")}
-              onBuy={handleBuy}
-            />
+              status="open" type={""}            />
             <LotteryCard
+            
               title="หวยลาว VIP"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open" 
-              type=""
-              onAddToCart={() => handleAddToCart("678901")}
-              onBuy={handleBuy}
-            />
+              status="open" type={""}            />
+           
           </div>
 
           <div className="text-center mt-12">
