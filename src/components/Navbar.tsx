@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wallet, User, LogOut, Menu, Ticket } from "lucide-react";
+import { Wallet, User, LogOut, Menu, ShoppingCart } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Badge } from "@/components/ui/badge";
 import WalletComponent from "@/components/Wallet";
+import Cart from "@/components/lottery/Cart";
+import { useCartContext } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const userBalance = 12500; // Mock data
+  const { cart, removeFromCart, getTotalPrice, clearCart } = useCartContext();
+
+  const handleCheckout = () => {
+    toast.success("กำลังดำเนินการชำระเงิน...");
+    clearCart();
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
@@ -55,6 +65,39 @@ const Navbar = () => {
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
+            {/* Cart Button */}
+            <div className="hidden sm:flex">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    className="relative"
+                  >
+                    <ShoppingCart className="h-5 w-5" />
+                    {cart.length > 0 && (
+                      <Badge 
+                        className="absolute -top-2 -right-2 h-5 w-5 flex items-center justify-center p-0 bg-gradient-gold text-xs"
+                      >
+                        {cart.length}
+                      </Badge>
+                    )}
+                  </Button>
+                </SheetTrigger>
+                <SheetContent
+                  side="right"
+                  className="w-[400px] sm:w-[480px] overflow-y-auto"
+                >
+                  <Cart 
+                    items={cart}
+                    onRemove={removeFromCart}
+                    totalPrice={getTotalPrice()}
+                    onCheckout={handleCheckout}
+                  />
+                </SheetContent>
+              </Sheet>
+            </div>
+
             {/* Wallet Display */}
             <div className="hidden sm:flex">
               <Sheet>
@@ -99,6 +142,14 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent side="right" className="w-[280px]">
                 <div className="flex flex-col gap-6 mt-8">
+                  {/* Mobile Cart */}
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-primary/10 border border-primary/20">
+                    <ShoppingCart className="h-5 w-5 text-primary" />
+                    <span className="font-semibold text-primary">
+                      ตะกร้า ({cart.length})
+                    </span>
+                  </div>
+
                   {/* Mobile Wallet */}
                   <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-gradient-gold">
                     <Wallet className="h-5 w-5 text-accent-foreground" />

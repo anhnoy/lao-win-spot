@@ -6,9 +6,11 @@ interface LotteryCardProps {
   closingTime: string;
   prize: string;
   status: "open" | "closed";
+  onAddToCart?: () => void;
+  onBuy?: () => void;
 }
 
-const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardProps) => {
+const LotteryCard = ({ title, type, closingTime, prize, status, onAddToCart, onBuy }: LotteryCardProps) => {
   return (
     <div className="relative overflow-hidden rounded-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
       {/* Background with overlay */}
@@ -93,12 +95,14 @@ const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardPro
           <Button 
             className="flex-1 bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white font-bold text-lg py-6 rounded-lg shadow-lg transition-all"
             disabled={status === "closed"}
+            onClick={onAddToCart}
           >
             เพิ่มลงตะกร้า
           </Button>
           <Button 
             className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold text-lg py-6 rounded-lg shadow-lg transition-all"
             disabled={status === "closed"}
+            onClick={onBuy}
           >
             {status === "open" ? "ซื้อหวย" : "ปิดรับแทง"}
           </Button>
