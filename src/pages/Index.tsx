@@ -18,7 +18,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative overflow-hidden">
-        <div 
+        <div
           className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: `url(${heroImage})`,
@@ -27,12 +27,14 @@ const Index = () => {
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/90 to-background" />
-        
+
         <div className="relative container mx-auto px-4 py-20 md:py-32">
           <div className="max-w-3xl mx-auto text-center space-y-6">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-4">
               <Sparkles className="h-4 w-4 text-primary" />
-              <span className="text-sm font-medium text-primary">ระบบซื้อหวยออนไลน์ที่ทันสมัยที่สุด</span>
+              <span className="text-sm font-medium text-primary">
+                ระบบซื้อหวยออนไลน์ที่ทันสมัยที่สุด
+              </span>
             </div>
 
             <h1 className="text-4xl md:text-6xl font-bold font-thai leading-tight">
@@ -44,20 +46,28 @@ const Index = () => {
             </h1>
 
             <p className="text-lg md:text-xl text-muted-foreground font-thai max-w-2xl mx-auto">
-              แพลตฟอร์มซื้อหวยลาวที่ปลอดภัย รองรับหวยทุกประเภท พร้อมระบบตรวจผลอัตโนมัติ
+              แพลตฟอร์มซื้อหวยลาวที่ปลอดภัย รองรับหวยทุกประเภท
+              พร้อมระบบตรวจผลอัตโนมัติ
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button size="lg" className="bg-gradient-primary hover:opacity-90 text-lg px-8" asChild>
+              <Button
+                size="lg"
+                className="bg-gradient-primary hover:opacity-90 text-lg px-8"
+                asChild
+              >
                 <Link to="/buy">
                   <Zap className="mr-2 h-5 w-5" />
                   เริ่มซื้อหวย
                 </Link>
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8" asChild>
-                <Link to="/results">
-                  ดูผลหวย
-                </Link>
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-lg px-8"
+                asChild
+              >
+                <Link to="/results">ดูผลหวย</Link>
               </Button>
             </div>
           </div>
@@ -79,7 +89,10 @@ const Index = () => {
             </div>
 
             {/* Award Icon - กดแล้วโชว์ Modal */}
-            <div className="text-center space-y-3 p-6 cursor-pointer" onClick={openModal}>
+            <div
+              className="text-center space-y-3 p-6 cursor-pointer"
+              onClick={openModal}
+            >
               <div className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-gradient-win">
                 <Award className="h-8 w-8 text-success-foreground" />
               </div>
@@ -97,25 +110,63 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold font-thai mb-4">
-              หวยลาวทุกประเภท
+              หวยลาวทประเภทใบ
             </h2>
             <p className="text-muted-foreground text-lg">
-              เลือกซื้อหวยลาวที่คุณชื่นชอบ
+              เลือกซื้อหวยลาวที่คุณชื่นชอบ ได้ลุ้นรางวัลใหญ่ 140 รางวัลต{" "}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <LotteryCard title="หวยลาว VIP" type="777777" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
-            <LotteryCard title="หวยลาว VIP" type="777778" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
-            <LotteryCard title="หวยลาว VIP" type="777779" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
-            <LotteryCard title="หวยลาว VIP" type="777771" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
-            <LotteryCard title="หวยลาว VIP" type="777772" closingTime="16:00 น." prize="5,000,000 ฿" status="open" />
+            <LotteryCard
+              title="หวยลาว VIP"
+              type="777777"
+              closingTime="16:00 น."
+              prize="5,000,000 ฿"
+              status="open"
+            />
+            <LotteryCard
+              title="หวยลาว VIP"
+              type="777778"
+              closingTime="16:00 น."
+              prize="5,000,000 ฿"
+              status="open"
+            />
+            <LotteryCard
+              title="หวยลาว VIP"
+              type="777779"
+              closingTime="16:00 น."
+              prize="5,000,000 ฿"
+              status="open"
+            />
+            <LotteryCard
+              title="หวยลาว VIP"
+              type="777771"
+              closingTime="16:00 น."
+              prize="5,000,000 ฿"
+              status="open"
+            />
+            <LotteryCard
+              title="หวยลาว VIP"
+              type="777772"
+              closingTime="16:00 น."
+              prize="5,000,000 ฿"
+              status="open"
+            />
+            <LotteryCard
+            
+              title="หวยลาว VIP"
+              type="777773"
+              closingTime="16:00 น."
+              prize="5,000,000 ฿"
+              status="open"
+            />
+           
           </div>
+
           <div className="text-center mt-12">
             <Button size="lg" variant="outline" asChild>
-              <Link to="/buy">
-                ดูหวยทั้งหมด
-              </Link>
+              <Link to="/buy">ดูหวยทั้งหมด</Link>
             </Button>
           </div>
         </div>
@@ -125,7 +176,9 @@ const Index = () => {
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
           <div className="bg-white rounded-lg shadow-lg max-w-4xl w-full max-h-[80vh] overflow-auto p-6">
-            <h2 className="text-2xl font-bold mb-4 text-center">อัตราจ่ายหวยลาว</h2>
+            <h2 className="text-2xl font-bold mb-4 text-center">
+              อัตราจ่ายหวยลาว
+            </h2>
 
             <table className="w-full table-auto border border-gray-300">
               <thead>
@@ -142,7 +195,9 @@ const Index = () => {
                   <td className="border px-2 py-1">1 ตัวตรง</td>
                   <td className="border px-2 py-1">4</td>
                   <td className="border px-2 py-1">–</td>
-                  <td className="border px-2 py-1">แทงเลข 7 → ออก 7 → ได้ 4 บาท</td>
+                  <td className="border px-2 py-1">
+                    แทงเลข 7 → ออก 7 → ได้ 4 บาท
+                  </td>
                   <td className="border px-2 py-1">แทงเลขตรง 1 ตัว</td>
                 </tr>
                 <tr>
@@ -150,50 +205,66 @@ const Index = () => {
                   <td className="border px-2 py-1">95</td>
                   <td className="border px-2 py-1">ข้างเคียง: 4</td>
                   <td className="border px-2 py-1">
-                    แทงเลข 23 → ออก 23 → ได้ 95 บาท<br />
+                    แทงเลข 23 → ออก 23 → ได้ 95 บาท
+                    <br />
                     ออก 22 หรือ 24 → ได้ 4 บาท
                   </td>
-                  <td className="border px-2 py-1">ตัวตรง + ข้างเคียงเลขใกล้เคียง</td>
+                  <td className="border px-2 py-1">
+                    ตัวตรง + ข้างเคียงเลขใกล้เคียง
+                  </td>
                 </tr>
                 <tr>
                   <td className="border px-2 py-1">3 ตัวตรง</td>
                   <td className="border px-2 py-1">800</td>
                   <td className="border px-2 py-1">ข้างเคียง: 130</td>
                   <td className="border px-2 py-1">
-                    แทงเลข 123 → ออก 123 → ได้ 800 บาท<br />
+                    แทงเลข 123 → ออก 123 → ได้ 800 บาท
+                    <br />
                     ออก 122 หรือ 124 → ได้ 130 บาท
                   </td>
-                  <td className="border px-2 py-1">ตัวตรง + ข้างเคียงเลขใกล้เคียง</td>
+                  <td className="border px-2 py-1">
+                    ตัวตรง + ข้างเคียงเลขใกล้เคียง
+                  </td>
                 </tr>
                 <tr>
                   <td className="border px-2 py-1">4 ตัวตรง</td>
                   <td className="border px-2 py-1">4,500</td>
                   <td className="border px-2 py-1">–</td>
-                  <td className="border px-2 py-1">แทงเลข 1234 → ออก 1234 → ได้ 4,500 บาท</td>
+                  <td className="border px-2 py-1">
+                    แทงเลข 1234 → ออก 1234 → ได้ 4,500 บาท
+                  </td>
                   <td className="border px-2 py-1">ตัวตรง 4 ตัว</td>
                 </tr>
                 <tr>
                   <td className="border px-2 py-1">5 ตัวตรง</td>
                   <td className="border px-2 py-1">55,000</td>
                   <td className="border px-2 py-1">–</td>
-                  <td className="border px-2 py-1">แทงเลข 12345 → ออก 12345 → ได้ 55,000 บาท</td>
+                  <td className="border px-2 py-1">
+                    แทงเลข 12345 → ออก 12345 → ได้ 55,000 บาท
+                  </td>
                   <td className="border px-2 py-1">ตัวตรง 5 ตัว</td>
                 </tr>
                 <tr>
                   <td className="border px-2 py-1">6 ตัวตรง</td>
                   <td className="border px-2 py-1">130,000</td>
                   <td className="border px-2 py-1">–</td>
-                  <td className="border px-2 py-1">แทงเลข 123456 → ออก 123456 → ได้ 130,000 บาท</td>
+                  <td className="border px-2 py-1">
+                    แทงเลข 123456 → ออก 123456 → ได้ 130,000 บาท
+                  </td>
                   <td className="border px-2 py-1">ตัวตรง 6 ตัว</td>
                 </tr>
               </tbody>
             </table>
 
             <p className="mt-3 text-sm text-gray-600">
-              💡 หมายเหตุ:<br />
-              ข้างเคียง = เลขใกล้เคียงตัวตรง 1 หลัก เช่น<br />
-              2 ตัวตรง: แทง 23 → ข้างเคียงคือ 22, 24<br />
-              3 ตัวตรง: แทง 123 → ข้างเคียงคือ 122, 124<br />
+              💡 หมายเหตุ:
+              <br />
+              ข้างเคียง = เลขใกล้เคียงตัวตรง 1 หลัก เช่น
+              <br />
+              2 ตัวตรง: แทง 23 → ข้างเคียงคือ 22, 24
+              <br />
+              3 ตัวตรง: แทง 123 → ข้างเคียงคือ 122, 124
+              <br />
               ไม่มีการแยกตัวบน/ล่าง → ทุกเลขที่ออกถือว่าตรงตัว
             </p>
 
@@ -223,15 +294,20 @@ const Index = () => {
               สมัครสมาชิกวันนี้ รับโบนัสทันที 100 บาท
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
-              <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8" asChild>
-                <Link to="/register">
-                  สมัครสมาชิก
-                </Link>
+              <Button
+                size="lg"
+                className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8"
+                asChild
+              >
+                <Link to="/register">สมัครสมาชิก</Link>
               </Button>
-              <Button size="lg" variant="outline" className="text-lg px-8 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10" asChild>
-                <Link to="/login">
-                  เข้าสู่ระบบ
-                </Link>
+              <Button
+                size="lg"
+                variant="outline"
+                className="text-lg px-8 border-primary-foreground/20 text-primary-foreground hover:bg-primary-foreground/10"
+                asChild
+              >
+                <Link to="/login">เข้าสู่ระบบ</Link>
               </Button>
             </div>
           </div>
@@ -242,8 +318,12 @@ const Index = () => {
       <footer className="py-8 border-t border-border">
         <div className="container mx-auto px-4">
           <div className="text-center text-sm text-muted-foreground">
-            <p>© 2025 หวยลาวออนไลน์ - ระบบซื้อหวยออนไลน์ที่ปลอดภัยและน่าเชื่อถือ</p>
-            <p className="mt-2">การพนันอาจเสพติดและเป็นอันตราย โปรดเล่นอย่างมีสติ</p>
+            <p>
+              © 2025 หวยลาวออนไลน์ - ระบบซื้อหวยออนไลน์ที่ปลอดภัยและน่าเชื่อถือ
+            </p>
+            <p className="mt-2">
+              การพนันอาจเสพติดและเป็นอันตราย โปรดเล่นอย่างมีสติ
+            </p>
           </div>
         </div>
       </footer>

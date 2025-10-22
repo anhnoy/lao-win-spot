@@ -14,11 +14,18 @@ interface LotteryCardProps {
 const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardProps) => {
   return (
     <Card className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-      <div className="relative h-32 bg-gradient-royal flex items-center justify-center">
-        <div className="text-center">
+      <div
+        className="relative h-32 flex items-center justify-center bg-cover bg-center"
+        style={{ backgroundImage: "url('https://i.imgur.com/X14lxZe.jpg')" }}
+      >
+        {/* Overlay สีดำโปร่งใส */}
+        <div className="absolute inset-0 bg-black/40"></div>
+
+        <div className="relative text-center">
           <h3 className="text-2xl font-bold text-primary-foreground font-thai">{title}</h3>
           <p className="text-sm text-primary-foreground/80 mt-1">{type}</p>
         </div>
+
         {status === "closed" && (
           <Badge className="absolute top-3 right-3 bg-destructive">
             ปิดรับแทง
