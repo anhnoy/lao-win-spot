@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Award } from "lucide-react";
 
 interface LotteryCardProps {
   title: string;
@@ -44,19 +43,18 @@ const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardPro
           <path d="M0,0 L20,0 C10,10 10,10 0,20 Z" />
         </svg>
 
+        {/* Content */}
         <div className="relative z-10 space-y-4">
-          {/* Top Icon and Title */}
+          {/* Title */}
           <div className="flex flex-col items-center">
-            <div className="w-16 h-16 bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center shadow-lg mb-2">
-              <Award className="w-10 h-10 text-white" />
-            </div>
-            <h3 className="text-2xl font-bold text-yellow-400 tracking-wider">WIN-LOTTERY</h3>
+            <h3 className="text-2xl font-bold text-yellow-400 tracking-wider">{title}</h3>
+            <p className="text-sm text-yellow-300 mt-1">{type}</p>
           </div>
 
           {/* Date and Round Info */}
           <div className="border-2 border-yellow-500/60 rounded p-3 text-center bg-black/20">
             <p className="text-yellow-300 text-sm">
-              งวด / วันที่ออกหวย: <span className="font-bold">01/12/2025</span>
+              งวด / วันที่ออกหวย: <span className="font-bold">{closingTime}</span>
             </p>
           </div>
 
@@ -75,7 +73,7 @@ const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardPro
             
             <div className="flex-1 mx-4">
               <div className="border border-yellow-500/40 rounded px-4 py-2 text-center bg-black/20">
-                <p className="text-yellow-300 text-sm">ราคาสลาก: <span className="font-bold text-lg">100บาท</span></p>
+                <p className="text-yellow-300 text-sm">ราคาสลาก: <span className="font-bold text-lg">{prize}</span></p>
               </div>
             </div>
           </div>
@@ -88,7 +86,7 @@ const LotteryCard = ({ title, type, closingTime, prize, status }: LotteryCardPro
       {/* Prize and Button Section */}
       <div className="bg-gradient-to-r from-slate-900 to-slate-800 p-4 space-y-3">
         <div className="text-center">
-          <p className="text-yellow-400 text-sm mb-1">🏆 รางวัลสูงสุด: <span className="text-xl font-bold">5,000,000 ฿</span></p>
+          <p className="text-yellow-400 text-sm mb-1">🏆 รางวัลสูงสุด: <span className="text-xl font-bold">{prize}</span></p>
         </div>
 
         <Button 

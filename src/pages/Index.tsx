@@ -120,47 +120,40 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <LotteryCard
               title="หวยลาว VIP"
-              type="777777"
               closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open"
-            />
+              prize="5,000,0004 ฿"
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
-              type="777778"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open"
-            />
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
-              type="777779"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open"
-            />
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
-              type="777771"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open"
-            />
+              status="open" type={""}            />
             <LotteryCard
               title="หวยลาว VIP"
-              type="777772"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open"
-            />
+              status="open" type={""}            />
             <LotteryCard
             
               title="หวยลาว VIP"
-              type="777773"
+
               closingTime="16:00 น."
               prize="5,000,000 ฿"
-              status="open"
-            />
+              status="open" type={""}            />
            
           </div>
 
