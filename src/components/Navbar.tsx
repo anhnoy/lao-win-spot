@@ -1,11 +1,25 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Wallet, User, LogOut, Menu, Ticket } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Wallet, User, LogOut, Menu, ShoppingCart } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import WalletComponent from "@/components/Wallet";
+import Cart from "@/components/lottery/Cart";
+import { useCartContext } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 const Navbar = () => {
   const userBalance = 12500; // Mock data
+  const { cart, removeFromCart, getTotalPrice, clearCart } = useCartContext();
+
+  const handleCheckout = () => {
+    if (cart.length === 0) {
+      toast.error("ตะกร้าว่างเปล่า");
+      return;
+    }
+    toast.success("กำลังดำเนินการชำระเงิน...");
+    clearCart();
+  };
 
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-border bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
@@ -78,6 +92,28 @@ const Navbar = () => {
               </Sheet>
             </div>
 
+            {/* Cart Button */}
+            <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="relative">
+                  <ShoppingCart className="h-5 w-5" />
+                  {cart.length > 0 && (
+                    <Badge className="absolute -top-1 -right-1 h-5 w-5 flex items-center justify-center p-0 bg-red-500">
+                      {cart.length}
+                    </Badge>
+                  )}
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[400px] sm:w-[480px]">
+                <Cart
+                  items={cart}
+                  onRemove={removeFromCart}
+                  totalPrice={getTotalPrice()}
+                  onCheckout={handleCheckout}
+                />
+              </SheetContent>
+            </Sheet>
+
             {/* User Menu - Desktop */}
             <div className="hidden md:flex items-center gap-2">
               <Button variant="ghost" size="icon" asChild>
@@ -104,6 +140,14 @@ const Navbar = () => {
                     <Wallet className="h-5 w-5 text-accent-foreground" />
                     <span className="font-semibold text-accent-foreground">
                       {userBalance.toLocaleString()} ฿
+                    </span>
+                  </div>
+
+                  {/* Mobile Cart */}
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-lg bg-muted">
+                    <ShoppingCart className="h-5 w-5" />
+                    <span className="font-semibold">
+                      ตะกร้า ({cart.length})
                     </span>
                   </div>
 

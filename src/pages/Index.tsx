@@ -5,12 +5,23 @@ import Navbar from "@/components/Navbar";
 import LotteryCard from "@/components/LotteryCard";
 import { Sparkles, Shield, Zap, Award } from "lucide-react";
 import heroImage from "@/assets/hero-lottery.jpg";
+import { useCartContext } from "@/contexts/CartContext";
+import { toast } from "sonner";
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const { addToCart } = useCartContext();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const handleAddToCart = (number: string) => {
+    addToCart(number, 1);
+  };
+
+  const handleBuy = () => {
+    toast.info("กรุณาเลือกเลขที่ต้องการซื้อจากหน้าซื้อหวย");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -119,42 +130,59 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             <LotteryCard
-              title="หวยลาว VIP"
-              closingTime="16:00 น."
-              prize="5,000,0004 ฿"
-              status="open" type={""}            />
+              title="หวยลาวพัฒนา"
+              type="พัฒนา"
+              closingTime="15:30 น."
+              prize="x900"
+              status="open"
+              onAddToCart={() => handleAddToCart("789456")}
+              onBuy={handleBuy}
+            />
             <LotteryCard
               title="หวยลาว VIP"
-
+              type="VIP"
               closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open" type={""}            />
+              prize="x950"
+              status="open"
+              onAddToCart={() => handleAddToCart("123456")}
+              onBuy={handleBuy}
+            />
+            <LotteryCard
+              title="หวยลาวสตาร์"
+              type="สตาร์"
+              closingTime="17:30 น."
+              prize="x1000"
+              status="open"
+              onAddToCart={() => handleAddToCart("456789")}
+              onBuy={handleBuy}
+            />
+            <LotteryCard
+              title="หวยลาวทีวี"
+              type="ทีวี"
+              closingTime="18:00 น."
+              prize="x800"
+              status="open"
+              onAddToCart={() => handleAddToCart("987654")}
+              onBuy={handleBuy}
+            />
+            <LotteryCard
+              title="หวยลาวพัฒนา"
+              type="พัฒนา"
+              closingTime="20:30 น."
+              prize="x900"
+              status="open"
+              onAddToCart={() => handleAddToCart("135790")}
+              onBuy={handleBuy}
+            />
             <LotteryCard
               title="หวยลาว VIP"
-
-              closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open" type={""}            />
-            <LotteryCard
-              title="หวยลาว VIP"
-
-              closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open" type={""}            />
-            <LotteryCard
-              title="หวยลาว VIP"
-
-              closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open" type={""}            />
-            <LotteryCard
-            
-              title="หวยลาว VIP"
-
-              closingTime="16:00 น."
-              prize="5,000,000 ฿"
-              status="open" type={""}            />
-           
+              type="VIP"
+              closingTime="21:00 น."
+              prize="x950"
+              status="open"
+              onAddToCart={() => handleAddToCart("246813")}
+              onBuy={handleBuy}
+            />
           </div>
 
           <div className="text-center mt-12">

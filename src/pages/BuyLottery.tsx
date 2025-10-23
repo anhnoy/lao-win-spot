@@ -3,7 +3,7 @@ import Navbar from "@/components/Navbar";
 import LotteryTypeSelector from "@/components/lottery/LotteryTypeSelector";
 import NumberInput from "@/components/lottery/NumberInput";
 import Cart from "@/components/lottery/Cart";
-import { useCart } from "@/hooks/useCart";
+import { useCartContext } from "@/contexts/CartContext";
 import { LOTTERY_TYPES } from "@/constants/lottery";
 import { toast } from "sonner";
 
@@ -12,7 +12,7 @@ const BuyLottery = () => {
   const [amount, setAmount] = useState<number>(1);
   const [selectedLottery, setSelectedLottery] = useState(LOTTERY_TYPES[0]);
   
-  const { cart, addToCart, removeFromCart, getTotalPrice } = useCart();
+  const { cart, addToCart, removeFromCart, getTotalPrice, clearCart } = useCartContext();
 
   const handleAddToCart = () => {
     const success = addToCart(selectedNumbers, amount);
@@ -23,7 +23,12 @@ const BuyLottery = () => {
   };
 
   const handleCheckout = () => {
+    if (cart.length === 0) {
+      toast.error("ตะกร้าว่างเปล่า");
+      return;
+    }
     toast.success("กำลังดำเนินการชำระเงิน...");
+    clearCart();
   };
 
   return (
