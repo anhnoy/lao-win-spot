@@ -4,29 +4,30 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Wallet as WalletIcon, TrendingUp, Download, Upload, History } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { useWallet } from "@/hooks/useWallet";
+import { DepositDialog } from "./wallet/DepositDialog";
+import { WithdrawDialog } from "./wallet/WithdrawDialog";
+import { TransactionHistoryDialog } from "./wallet/TransactionHistoryDialog";
+import { format } from "date-fns";
 
 interface WalletProps {
-  balance: number;
+  balance?: number;
   compact?: boolean; // For sidebar mode
 }
 
-interface Transaction {
-  date: string;
-  type: string;
-  amount: number;
-  status: "สำเร็จ" | "รอดำเนินการ";
-}
+const Wallet = ({ compact = false }: WalletProps) => {
+  const { wallet, transactions, loading, deposit, withdraw } = useWallet();
+  const [depositDialogOpen, setDepositDialogOpen] = useState(false);
+  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
+  const [historyDialogOpen, setHistoryDialogOpen] = useState(false);
 
-const Wallet = ({ balance: initialBalance, compact = false }: WalletProps) => {
-  const [balance] = useState(initialBalance);
-  const [referral] = useState(50000);
-
-  // ตัวอย่างประวัติธุรกรรม
-  const transactions: Transaction[] = [
-    { date: "21/10/2025", type: "ฝากเงิน", amount: 500, status: "สำเร็จ" },
-    { date: "20/10/2025", type: "ถอนเงิน", amount: 300, status: "รอดำเนินการ" },
-    { date: "19/10/2025", type: "แนะนำเพื่อน", amount: 100, status: "สำเร็จ" },
-  ];
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <p className="text-muted-foreground">กำลังโหลด...</p>
+      </div>
+    );
+  }
 
   return (
     <div className={compact ? "" : "min-h-screen bg-background"}>
@@ -62,7 +63,7 @@ const Wallet = ({ balance: initialBalance, compact = false }: WalletProps) => {
               </div>
               <div className="space-y-1">
                 <p className={`${compact ? 'text-4xl' : 'text-6xl'} font-extrabold text-primary-foreground tracking-tight`}>
-                  {balance.toLocaleString()}
+                  {(wallet?.balance || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
                 <p className={`${compact ? 'text-xl' : 'text-2xl'} font-bold text-primary-foreground/90`}>฿</p>
               </div>
@@ -90,7 +91,7 @@ const Wallet = ({ balance: initialBalance, compact = false }: WalletProps) => {
               </div>
               <div className="space-y-1">
                 <p className={`${compact ? 'text-4xl' : 'text-6xl'} font-extrabold text-accent-foreground tracking-tight`}>
-                  {referral.toLocaleString()}
+                  {(wallet?.referral_balance || 0).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 </p>
                 <p className={`${compact ? 'text-xl' : 'text-2xl'} font-bold text-accent-foreground/90`}>฿</p>
               </div>
@@ -106,6 +107,7 @@ const Wallet = ({ balance: initialBalance, compact = false }: WalletProps) => {
               <Button 
                 size={compact ? "default" : "lg"}
                 className={`${compact ? 'h-11 text-sm' : 'h-14 text-lg'} font-thai gap-2 bg-primary hover:bg-primary/90 shadow-md hover:shadow-lg transition-all`}
+                onClick={() => setDepositDialogOpen(true)}
               >
                 <Download className={compact ? 'w-4 h-4' : 'w-5 h-5'} />
                 ฝากเงิน
@@ -114,6 +116,7 @@ const Wallet = ({ balance: initialBalance, compact = false }: WalletProps) => {
                 size={compact ? "default" : "lg"}
                 variant="destructive" 
                 className={`${compact ? 'h-11 text-sm' : 'h-14 text-lg'} font-thai gap-2 shadow-md hover:shadow-lg transition-all`}
+                onClick={() => setWithdrawDialogOpen(true)}
               >
                 <Upload className={compact ? 'w-4 h-4' : 'w-5 h-5'} />
                 ถอนเงิน
@@ -122,6 +125,7 @@ const Wallet = ({ balance: initialBalance, compact = false }: WalletProps) => {
                 size={compact ? "default" : "lg"}
                 variant="outline" 
                 className={`${compact ? 'h-11 text-sm' : 'h-14 text-lg'} font-thai gap-2 hover:bg-muted shadow-sm hover:shadow-md transition-all`}
+                onClick={() => setHistoryDialogOpen(true)}
               >
                 <History className={compact ? 'w-4 h-4' : 'w-5 h-5'} />
                 ประวัติธุรกรรม
@@ -145,40 +149,78 @@ const Wallet = ({ balance: initialBalance, compact = false }: WalletProps) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {transactions.map((tx, index) => (
-                    <tr 
-                      key={index} 
-                      className="border-b border-border hover:bg-muted/50 transition-colors group"
-                    >
-                      <td className={`${compact ? 'px-2 py-2 text-xs' : 'px-6 py-5 text-base'} text-muted-foreground group-hover:text-foreground transition-colors`}>
-                        {compact ? tx.date.split('/').slice(0, 2).join('/') : tx.date}
-                      </td>
-                      <td className={`${compact ? 'px-2 py-2 text-xs' : 'px-6 py-5 text-base'} font-semibold`}>
-                        {tx.type}
-                      </td>
-                      <td className={`${compact ? 'px-2 py-2 text-xs' : 'px-6 py-5 text-base'} text-right font-bold text-foreground`}>
-                        {tx.amount.toLocaleString()}
-                      </td>
-                      <td className={`${compact ? 'px-2 py-2' : 'px-6 py-5'} text-center`}>
-                        <Badge 
-                          variant={tx.status === "สำเร็จ" ? "default" : "secondary"}
-                          className={`${compact ? 'px-2 py-0.5 text-xs' : 'px-4 py-1 text-sm'} font-semibold ${
-                            tx.status === "สำเร็จ" 
-                              ? "bg-success hover:bg-success text-success-foreground" 
-                              : "bg-muted hover:bg-muted"
-                          }`}
-                        >
-                          {tx.status}
-                        </Badge>
+                  {transactions.length === 0 ? (
+                    <tr>
+                      <td colSpan={4} className={`${compact ? 'px-2 py-4' : 'px-6 py-8'} text-center text-muted-foreground`}>
+                        ไม่มีธุรกรรม
                       </td>
                     </tr>
-                  ))}
+                  ) : (
+                    transactions.slice(0, 5).map((tx) => {
+                      const typeLabels: { [key: string]: string } = {
+                        deposit: 'ฝากเงิน',
+                        withdrawal: 'ถอนเงิน',
+                        purchase: 'ซื้อหวย',
+                        refund: 'คืนเงิน',
+                        referral: 'แนะนำเพื่อน'
+                      };
+                      
+                      return (
+                        <tr 
+                          key={tx.id} 
+                          className="border-b border-border hover:bg-muted/50 transition-colors group"
+                        >
+                          <td className={`${compact ? 'px-2 py-2 text-xs' : 'px-6 py-5 text-base'} text-muted-foreground group-hover:text-foreground transition-colors`}>
+                            {format(new Date(tx.created_at), 'dd/MM/yyyy HH:mm')}
+                          </td>
+                          <td className={`${compact ? 'px-2 py-2 text-xs' : 'px-6 py-5 text-base'} font-semibold`}>
+                            {typeLabels[tx.type] || tx.type}
+                          </td>
+                          <td className={`${compact ? 'px-2 py-2 text-xs' : 'px-6 py-5 text-base'} text-right font-bold ${
+                            tx.type === 'withdrawal' ? 'text-red-600' : 'text-green-600'
+                          }`}>
+                            {tx.type === 'withdrawal' ? '-' : '+'}
+                            {tx.amount.toFixed(2)}
+                          </td>
+                          <td className={`${compact ? 'px-2 py-2' : 'px-6 py-5'} text-center`}>
+                            <Badge 
+                              variant={tx.status === "completed" ? "default" : "secondary"}
+                              className={`${compact ? 'px-2 py-0.5 text-xs' : 'px-4 py-1 text-sm'} font-semibold ${
+                                tx.status === "completed" 
+                                  ? "bg-success hover:bg-success text-success-foreground" 
+                                  : "bg-muted hover:bg-muted"
+                              }`}
+                            >
+                              {tx.status === 'completed' ? 'สำเร็จ' : tx.status}
+                            </Badge>
+                          </td>
+                        </tr>
+                      );
+                    })
+                  )}
                 </tbody>
               </table>
             </div>
           </CardContent>
         </Card>
       </div>
+
+      <DepositDialog
+        open={depositDialogOpen}
+        onOpenChange={setDepositDialogOpen}
+        onDeposit={deposit}
+      />
+      <WithdrawDialog
+        open={withdrawDialogOpen}
+        onOpenChange={setWithdrawDialogOpen}
+        onWithdraw={withdraw}
+        maxAmount={wallet?.balance || 0}
+      />
+      <TransactionHistoryDialog
+        open={historyDialogOpen}
+        onOpenChange={setHistoryDialogOpen}
+        transactions={transactions}
+      />
     </div>
   );
 };
