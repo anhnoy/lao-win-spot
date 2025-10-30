@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import LotteryTypeSelector from "@/components/lottery/LotteryTypeSelector";
 import NumberInput from "@/components/lottery/NumberInput";
@@ -6,13 +7,28 @@ import Cart from "@/components/lottery/Cart";
 import { useCartContext } from "@/contexts/CartContext";
 import { LOTTERY_TYPES } from "@/constants/lottery";
 import { toast } from "sonner";
+import { useWallet } from "@/hooks/useWallet";
+import { supabase } from "@/integrations/supabase/client";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 const BuyLottery = () => {
+  const navigate = useNavigate();
   const [selectedNumbers, setSelectedNumbers] = useState<string>("");
   const [amount, setAmount] = useState<number>(1);
   const [selectedLottery, setSelectedLottery] = useState(LOTTERY_TYPES[0]);
+  const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   
   const { cart, addToCart, removeFromCart, getTotalPrice, clearCart } = useCartContext();
+  const { wallet, loading: walletLoading, withdraw, refresh } = useWallet();
 
   const handleAddToCart = () => {
     const success = addToCart(selectedNumbers, amount);
@@ -22,13 +38,67 @@ const BuyLottery = () => {
     }
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (cart.length === 0) {
       toast.error("ตะกร้าว่างเปล่า");
       return;
     }
-    toast.success("กำลังดำเนินการชำระเงิน...");
-    clearCart();
+
+    // Check if user is logged in
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
+      toast.error("กรุณาเข้าสู่ระบบก่อนทำการซื้อ");
+      navigate("/login");
+      return;
+    }
+
+    setShowConfirmDialog(true);
+  };
+
+  const handleConfirmPayment = async () => {
+    const totalPrice = getTotalPrice();
+
+    if (walletLoading) {
+      toast.error("กำลังโหลดข้อมูลกระเป๋าเงิน...");
+      return;
+    }
+
+    if (!wallet || wallet.balance < totalPrice) {
+      toast.error("ยอดเงินในกระเป๋าไม่เพียงพอ กรุณาเติมเงิน");
+      setShowConfirmDialog(false);
+      return;
+    }
+
+    try {
+      // Withdraw money from wallet
+      await withdraw(totalPrice);
+      
+      // Create lottery purchase record
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        const { error: purchaseError } = await supabase
+          .from('transactions')
+          .insert({
+            user_id: session.user.id,
+            type: 'purchase',
+            amount: -totalPrice,
+            status: 'completed'
+          });
+
+        if (purchaseError) {
+          console.error('Error recording purchase:', purchaseError);
+        }
+      }
+
+      toast.success("ซื้อหวยสำเร็จ!");
+      clearCart();
+      refresh();
+    } catch (error) {
+      console.error('Error during checkout:', error);
+      toast.error("เกิดข้อผิดพลาดในการชำระเงิน");
+    }
+
+    setShowConfirmDialog(false);
   };
 
   return (
@@ -70,6 +140,27 @@ const BuyLottery = () => {
           </div>
         </div>
       </div>
+
+      <AlertDialog open={showConfirmDialog} onOpenChange={setShowConfirmDialog}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>ยืนยันการซื้อ</AlertDialogTitle>
+            <AlertDialogDescription className="space-y-2">
+              <p>ยอดรวมที่ต้องชำระ: <span className="font-bold text-primary">{getTotalPrice().toLocaleString()} ฿</span></p>
+              <p>ยอดเงินคงเหลือในกระเป๋า: <span className="font-bold">{wallet?.balance.toLocaleString() || 0} ฿</span></p>
+              {wallet && wallet.balance >= getTotalPrice() && (
+                <p>ยอดคงเหลือหลังการซื้อ: <span className="font-bold text-green-600">{(wallet.balance - getTotalPrice()).toLocaleString()} ฿</span></p>
+              )}
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>ยกเลิก</AlertDialogCancel>
+            <AlertDialogAction onClick={handleConfirmPayment}>
+              ยืนยันการชำระเงิน
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 };
