@@ -22,23 +22,33 @@ import {
 
 const BuyLottery = () => {
   const navigate = useNavigate();
+  const [selectedNumbers, setSelectedNumbers] = useState<string>("");
+  const [amount, setAmount] = useState<number>(10);
   const [selectedLottery, setSelectedLottery] = useState(LOTTERY_TYPES[0]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   
   const { cart, addToCart, removeFromCart, getTotalPrice, clearCart } = useCartContext();
   const { wallet, loading: walletLoading, withdraw, refresh } = useWallet();
 
-  const handleAddMultipleToCart = (numbers: string[], pricePerNumber: number) => {
-    let successCount = 0;
-    numbers.forEach(number => {
-      const amount = Math.round(pricePerNumber / 80); // Convert price to number of tickets
-      const success = addToCart(number, amount);
-      if (success) successCount++;
-    });
-    
-    if (successCount > 0) {
-      toast.success(`เพิ่ม ${successCount} ชุดลงตะกร้าเรียบร้อย`);
+  const handleAddToCart = () => {
+    if (!selectedNumbers) {
+      toast.error("กรุณากรอกเลขที่ต้องการซื้อ");
+      return;
     }
+    const success = addToCart(selectedNumbers, amount);
+    if (success) {
+      setSelectedNumbers("");
+      setAmount(10);
+    }
+  };
+
+  const handleRandomGenerate = () => {
+    const length = Math.floor(Math.random() * 5) + 2; // 2-6 digits
+    const randomNum = Math.floor(Math.random() * Math.pow(10, length))
+      .toString()
+      .padStart(length, '0');
+    setSelectedNumbers(randomNum);
+    toast.success("สุ่มเลขเรียบร้อย");
   };
 
   const handleCheckout = async () => {
@@ -124,7 +134,12 @@ const BuyLottery = () => {
           />
 
           <NumberInput
-            onAddMultipleToCart={handleAddMultipleToCart}
+            selectedNumbers={selectedNumbers}
+            amount={amount}
+            onNumberChange={setSelectedNumbers}
+            onAmountChange={setAmount}
+            onAddToCart={handleAddToCart}
+            onRandomGenerate={handleRandomGenerate}
           />
           </div>
 
