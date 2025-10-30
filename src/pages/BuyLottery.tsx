@@ -22,19 +22,22 @@ import {
 
 const BuyLottery = () => {
   const navigate = useNavigate();
-  const [selectedNumbers, setSelectedNumbers] = useState<string>("");
-  const [amount, setAmount] = useState<number>(1);
   const [selectedLottery, setSelectedLottery] = useState(LOTTERY_TYPES[0]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   
   const { cart, addToCart, removeFromCart, getTotalPrice, clearCart } = useCartContext();
   const { wallet, loading: walletLoading, withdraw, refresh } = useWallet();
 
-  const handleAddToCart = () => {
-    const success = addToCart(selectedNumbers, amount);
-    if (success) {
-      setSelectedNumbers("");
-      setAmount(1);
+  const handleAddMultipleToCart = (numbers: string[], pricePerNumber: number) => {
+    let successCount = 0;
+    numbers.forEach(number => {
+      const amount = Math.round(pricePerNumber / 80); // Convert price to number of tickets
+      const success = addToCart(number, amount);
+      if (success) successCount++;
+    });
+    
+    if (successCount > 0) {
+      toast.success(`เพิ่ม ${successCount} ชุดลงตะกร้าเรียบร้อย`);
     }
   };
 
@@ -114,19 +117,15 @@ const BuyLottery = () => {
         <div className="grid lg:grid-cols-3 gap-6">
           {/* Left Side - Lottery Selection */}
           <div className="lg:col-span-2 space-y-6">
-            <LotteryTypeSelector
-              lotteryTypes={LOTTERY_TYPES}
-              selectedLottery={selectedLottery}
-              onSelectLottery={setSelectedLottery}
-            />
+          <LotteryTypeSelector
+            lotteryTypes={LOTTERY_TYPES}
+            selectedLottery={selectedLottery}
+            onSelectLottery={setSelectedLottery}
+          />
 
-            <NumberInput
-              selectedNumbers={selectedNumbers}
-              amount={amount}
-              onNumberChange={setSelectedNumbers}
-              onAmountChange={setAmount}
-              onAddToCart={handleAddToCart}
-            />
+          <NumberInput
+            onAddMultipleToCart={handleAddMultipleToCart}
+          />
           </div>
 
           {/* Right Side - Cart */}
