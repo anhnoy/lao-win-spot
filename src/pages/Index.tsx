@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
 import LotteryCard from "@/components/LotteryCard";
@@ -7,10 +7,12 @@ import { Sparkles, Shield, Zap, Award } from "lucide-react";
 import heroImage from "@/assets/hero-lottery.jpg";
 import { useCartContext } from "@/contexts/CartContext";
 import { toast } from "sonner";
+import { LOTTERY_TYPES } from "@/constants/lottery";
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { addToCart } = useCartContext();
+  const navigate = useNavigate();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -19,8 +21,9 @@ const Index = () => {
     addToCart(number, 1);
   };
 
-  const handleBuy = () => {
-    toast.info("กรุณาเลือกเลขที่ต้องการซื้อจากหน้าซื้อหวย");
+  const handleBuy = (lotteryId: string) => {
+    const lottery = LOTTERY_TYPES.find(l => l.id === lotteryId);
+    navigate("/buy", { state: { selectedLottery: lottery } });
   };
 
   return (
@@ -136,7 +139,7 @@ const Index = () => {
               prize="x900"
               status="open"
               onAddToCart={() => handleAddToCart("789456")}
-              onBuy={handleBuy}
+              onBuy={() => handleBuy("1")}
             />
             <LotteryCard
               title="หวยลาว VIP"
@@ -145,7 +148,7 @@ const Index = () => {
               prize="x950"
               status="open"
               onAddToCart={() => handleAddToCart("123456")}
-              onBuy={handleBuy}
+              onBuy={() => handleBuy("2")}
             />
             <LotteryCard
               title="หวยลาวสตาร์"
@@ -154,7 +157,7 @@ const Index = () => {
               prize="x1000"
               status="open"
               onAddToCart={() => handleAddToCart("456789")}
-              onBuy={handleBuy}
+              onBuy={() => handleBuy("3")}
             />
             <LotteryCard
               title="หวยลาวทีวี"
@@ -163,7 +166,7 @@ const Index = () => {
               prize="x800"
               status="open"
               onAddToCart={() => handleAddToCart("987654")}
-              onBuy={handleBuy}
+              onBuy={() => handleBuy("4")}
             />
             <LotteryCard
               title="หวยลาวพัฒนา"
@@ -172,7 +175,7 @@ const Index = () => {
               prize="x900"
               status="open"
               onAddToCart={() => handleAddToCart("135790")}
-              onBuy={handleBuy}
+              onBuy={() => handleBuy("1")}
             />
             <LotteryCard
               title="หวยลาว VIP"
@@ -181,7 +184,7 @@ const Index = () => {
               prize="x950"
               status="open"
               onAddToCart={() => handleAddToCart("246813")}
-              onBuy={handleBuy}
+              onBuy={() => handleBuy("2")}
             />
           </div>
 

@@ -1,11 +1,12 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import LotteryTypeSelector from "@/components/lottery/LotteryTypeSelector";
 import NumberInput from "@/components/lottery/NumberInput";
 import Cart from "@/components/lottery/Cart";
 import { useCartContext } from "@/contexts/CartContext";
 import { LOTTERY_TYPES } from "@/constants/lottery";
+import { LotteryType } from "@/types/lottery";
 import { toast } from "sonner";
 import { useWallet } from "@/hooks/useWallet";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,10 +23,19 @@ import {
 
 const BuyLottery = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [selectedNumbers, setSelectedNumbers] = useState<string>("");
   const [amount, setAmount] = useState<number>(10);
   const [selectedLottery, setSelectedLottery] = useState(LOTTERY_TYPES[0]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+
+  // Check if there's a pre-selected lottery from navigation state
+  useEffect(() => {
+    const state = location.state as { selectedLottery?: LotteryType };
+    if (state?.selectedLottery) {
+      setSelectedLottery(state.selectedLottery);
+    }
+  }, [location.state]);
   
   const { cart, addToCart, removeFromCart, getTotalPrice, clearCart } = useCartContext();
   const { wallet, loading: walletLoading, withdraw, refresh } = useWallet();
