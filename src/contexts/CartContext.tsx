@@ -26,7 +26,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       id: Date.now().toString(),
       number: number,
       amount: amount,
-      price: amount * LOTTERY_PRICE_PER_TICKET,
+      price: amount,
     };
 
     setCart(prev => [...prev, newItem]);
