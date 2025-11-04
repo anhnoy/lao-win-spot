@@ -151,24 +151,6 @@ const Index = () => {
               onBuy={() => handleBuy("2")}
             />
             <LotteryCard
-              title="หวยลาวสตาร์"
-              type="สตาร์"
-              closingTime="17:30 น."
-              prize="x1000"
-              status="open"
-              onAddToCart={() => handleAddToCart("456789")}
-              onBuy={() => handleBuy("3")}
-            />
-            <LotteryCard
-              title="หวยลาวทีวี"
-              type="ทีวี"
-              closingTime="18:00 น."
-              prize="x800"
-              status="open"
-              onAddToCart={() => handleAddToCart("987654")}
-              onBuy={() => handleBuy("4")}
-            />
-            <LotteryCard
               title="หวยลาวพัฒนา"
               type="พัฒนา"
               closingTime="20:30 น."
