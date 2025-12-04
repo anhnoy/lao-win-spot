@@ -1,30 +1,15 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Navbar from "@/components/Navbar";
-import LotteryCard from "@/components/LotteryCard";
-import { Sparkles, Shield, Zap, Award } from "lucide-react";
+import { Sparkles, Zap, Award } from "lucide-react";
 import heroImage from "@/assets/hero-lottery.jpg";
-import { useCartContext } from "@/contexts/CartContext";
-import { toast } from "sonner";
-import { LOTTERY_TYPES } from "@/constants/lottery";
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { addToCart } = useCartContext();
-  const navigate = useNavigate();
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  const handleAddToCart = (number: string) => {
-    addToCart(number, 1);
-  };
-
-  const handleBuy = (lotteryId: string) => {
-    const lottery = LOTTERY_TYPES.find(l => l.id === lotteryId);
-    navigate("/buy", { state: { selectedLottery: lottery } });
-  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -119,64 +104,6 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Lottery Types Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold font-thai mb-4">
-              หวยลาวทประเภทใบ
-            </h2>
-            <p className="text-muted-foreground text-lg">
-              เลือกซื้อหวยลาวที่คุณชื่นชอบ ได้ลุ้นรางวัลใหญ่ 140 รางวัลต{" "}
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-            <LotteryCard
-              title="หวยลาวพัฒนา"
-              type="พัฒนา"
-              closingTime="15:30 น."
-              prize="x900"
-              status="open"
-              onAddToCart={() => handleAddToCart("789456")}
-              onBuy={() => handleBuy("1")}
-            />
-            <LotteryCard
-              title="หวยลาว VIP"
-              type="VIP"
-              closingTime="16:00 น."
-              prize="x950"
-              status="open"
-              onAddToCart={() => handleAddToCart("123456")}
-              onBuy={() => handleBuy("2")}
-            />
-            <LotteryCard
-              title="หวยลาวพัฒนา"
-              type="พัฒนา"
-              closingTime="20:30 น."
-              prize="x900"
-              status="open"
-              onAddToCart={() => handleAddToCart("135790")}
-              onBuy={() => handleBuy("1")}
-            />
-            <LotteryCard
-              title="หวยลาว VIP"
-              type="VIP"
-              closingTime="21:00 น."
-              prize="x950"
-              status="open"
-              onAddToCart={() => handleAddToCart("246813")}
-              onBuy={() => handleBuy("2")}
-            />
-          </div>
-
-          <div className="text-center mt-12">
-            <Button size="lg" variant="outline" asChild>
-              <Link to="/buy">ดูหวยทั้งหมด</Link>
-            </Button>
-          </div>
-        </div>
-      </section>
 
       {/* Modal แสดงอัตราจ่าย */}
       {isModalOpen && (
