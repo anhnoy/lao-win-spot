@@ -7,6 +7,7 @@ import { CartProvider } from "./contexts/CartContext";
 import Index from "./pages/Index";
 import BuyLottery from "./pages/BuyLottery";
 import Results from "./pages/Results";
+import History from "./pages/History";
 import Auth from "./pages/Auth";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/buy" element={<BuyLottery />} />
             <Route path="/results" element={<Results />} />
+            <Route path="/history" element={<History />} />
             <Route path="/login" element={<Auth />} />
             <Route path="/register" element={<Auth />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
