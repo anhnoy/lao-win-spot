@@ -32,7 +32,7 @@ const Cart = ({ items, onRemove, totalPrice, onCheckout }: CartProps) => {
               <div>
                 <p className="font-bold text-lg">เลข {item.number}</p>
                 <p className="text-sm text-muted-foreground">
-                  {item.amount} ใบ × 80 บาท
+                  {item.amount} ใบ × {Math.round(item.price / item.amount)} บาท
                 </p>
               </div>
               <div className="flex items-center gap-3">
