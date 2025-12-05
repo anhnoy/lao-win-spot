@@ -31,9 +31,6 @@ const Cart = ({ items, onRemove, totalPrice, onCheckout }: CartProps) => {
             <div key={item.id} className="flex items-center justify-between p-3 bg-muted rounded-lg">
               <div>
                 <p className="font-bold text-lg">เลข {item.number}</p>
-                <p className="text-sm text-muted-foreground">
-                  {item.amount} ใบ × {Math.round(item.price / item.amount)} บาท
-                </p>
               </div>
               <div className="flex items-center gap-3">
                 <p className="font-bold">{item.price} ฿</p>
