@@ -16,6 +16,7 @@ interface RandomGenerateDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onGenerate: (numbers: { number: string; amount: number }[]) => void;
+  defaultAmount: number;
 }
 
 const DIGIT_OPTIONS = [
@@ -30,9 +31,10 @@ const RandomGenerateDialog = ({
   open,
   onOpenChange,
   onGenerate,
+  defaultAmount,
 }: RandomGenerateDialogProps) => {
   const [digits, setDigits] = useState("2");
-  const [amount, setAmount] = useState(10);
+  const [amount, setAmount] = useState(defaultAmount);
   const [sets, setSets] = useState(1);
 
   const handleGenerate = () => {

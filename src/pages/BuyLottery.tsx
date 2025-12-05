@@ -194,6 +194,7 @@ const BuyLottery = () => {
         open={showRandomDialog}
         onOpenChange={setShowRandomDialog}
         onGenerate={handleRandomGenerate}
+        defaultAmount={amount}
       />
     </div>
   );
