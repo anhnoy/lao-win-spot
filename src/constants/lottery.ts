@@ -8,13 +8,6 @@ export const LOTTERY_TYPES: LotteryType[] = [
     prize: "x900",
     status: "open",
   },
-  {
-    id: "2",
-    name: "หวยลาว VIP",
-    closing: "16:00",
-    prize: "x950",
-    status: "open",
-  },
 ];
 
 export const QUICK_NUMBERS = [
