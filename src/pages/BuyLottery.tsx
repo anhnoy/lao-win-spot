@@ -4,6 +4,7 @@ import Navbar from "@/components/Navbar";
 import LotteryTypeSelector from "@/components/lottery/LotteryTypeSelector";
 import NumberInput from "@/components/lottery/NumberInput";
 import Cart from "@/components/lottery/Cart";
+import RandomGenerateDialog from "@/components/lottery/RandomGenerateDialog";
 import { useCartContext } from "@/contexts/CartContext";
 import { LOTTERY_TYPES } from "@/constants/lottery";
 import { LotteryType } from "@/types/lottery";
@@ -28,6 +29,7 @@ const BuyLottery = () => {
   const [amount, setAmount] = useState<number>(10);
   const [selectedLottery, setSelectedLottery] = useState(LOTTERY_TYPES[0]);
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+  const [showRandomDialog, setShowRandomDialog] = useState(false);
 
   // Check if there's a pre-selected lottery from navigation state
   useEffect(() => {
@@ -52,13 +54,15 @@ const BuyLottery = () => {
     }
   };
 
-  const handleRandomGenerate = () => {
-    const length = Math.floor(Math.random() * 5) + 2; // 2-6 digits
-    const randomNum = Math.floor(Math.random() * Math.pow(10, length))
-      .toString()
-      .padStart(length, '0');
-    setSelectedNumbers(randomNum);
-    toast.success("สุ่มเลขเรียบร้อย");
+  const handleOpenRandomDialog = () => {
+    setShowRandomDialog(true);
+  };
+
+  const handleRandomGenerate = (numbers: { number: string; amount: number }[]) => {
+    numbers.forEach(({ number, amount }) => {
+      addToCart(number, amount);
+    });
+    toast.success(`เพิ่มเลขสุ่ม ${numbers.length} ชุดลงตะกร้าแล้ว`);
   };
 
   const handleCheckout = async () => {
@@ -149,7 +153,7 @@ const BuyLottery = () => {
             onNumberChange={setSelectedNumbers}
             onAmountChange={setAmount}
             onAddToCart={handleAddToCart}
-            onRandomGenerate={handleRandomGenerate}
+            onRandomGenerate={handleOpenRandomDialog}
           />
           </div>
 
@@ -185,6 +189,12 @@ const BuyLottery = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+
+      <RandomGenerateDialog
+        open={showRandomDialog}
+        onOpenChange={setShowRandomDialog}
+        onGenerate={handleRandomGenerate}
+      />
     </div>
   );
 };
