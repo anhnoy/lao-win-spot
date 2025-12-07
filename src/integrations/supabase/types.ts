@@ -14,6 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
+      lottery_purchases: {
+        Row: {
+          amount: number
+          created_at: string
+          draw_date: string | null
+          id: string
+          lottery_type: string
+          number: string
+          price_per_unit: number
+          prize_amount: number | null
+          result: string | null
+          status: string
+          total_price: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount?: number
+          created_at?: string
+          draw_date?: string | null
+          id?: string
+          lottery_type: string
+          number: string
+          price_per_unit: number
+          prize_amount?: number | null
+          result?: string | null
+          status?: string
+          total_price: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          draw_date?: string | null
+          id?: string
+          lottery_type?: string
+          number?: string
+          price_per_unit?: number
+          prize_amount?: number | null
+          result?: string | null
+          status?: string
+          total_price?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null
