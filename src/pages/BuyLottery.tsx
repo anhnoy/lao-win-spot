@@ -97,24 +97,48 @@ const BuyLottery = () => {
     }
 
     try {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session) {
+        toast.error("กรุณาเข้าสู่ระบบก่อนทำการซื้อ");
+        return;
+      }
+
       // Withdraw money from wallet
       await withdraw(totalPrice);
       
-      // Create lottery purchase record
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
-        const { error: purchaseError } = await supabase
-          .from('transactions')
-          .insert({
-            user_id: session.user.id,
-            type: 'purchase',
-            amount: -totalPrice,
-            status: 'completed'
-          });
+      // Create lottery purchase records for each item in cart
+      const purchaseRecords = cart.map(item => ({
+        user_id: session.user.id,
+        lottery_type: selectedLottery.id,
+        number: item.number,
+        amount: item.amount,
+        price_per_unit: item.price / item.amount,
+        total_price: item.price,
+        status: 'pending'
+      }));
 
-        if (purchaseError) {
-          console.error('Error recording purchase:', purchaseError);
-        }
+      const { error: purchaseError } = await supabase
+        .from('lottery_purchases')
+        .insert(purchaseRecords);
+
+      if (purchaseError) {
+        console.error('Error recording purchase:', purchaseError);
+        toast.error("เกิดข้อผิดพลาดในการบันทึกข้อมูล");
+        return;
+      }
+
+      // Create transaction record
+      const { error: txError } = await supabase
+        .from('transactions')
+        .insert({
+          user_id: session.user.id,
+          type: 'purchase',
+          amount: -totalPrice,
+          status: 'completed'
+        });
+
+      if (txError) {
+        console.error('Error recording transaction:', txError);
       }
 
       toast.success("ซื้อหวยสำเร็จ!");
